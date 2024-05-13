@@ -4,25 +4,14 @@ contributions:
   commands:
     - id: napari-serialem-navigator.get_reader
       python_name: napari_serialem_navigator._reader:napari_get_reader
-      title: Open data with SerialEM navigator
-    - id: napari-serialem-navigator.make_qwidget
-      python_name: napari_serialem_navigator._widget:ExampleQWidget
-      title: Make example QWidget
-    - id: napari-serialem-navigator.make_magic_widget
-      python_name: napari_serialem_navigator._widget:example_magic_widget
-      title: Make example magic widget
-    - id: napari-serialem-navigator.make_func_widget
-      python_name: napari_serialem_navigator._widget:example_function_widget
-      title: Make example function widget
+      title: Open SerialEM navigator
+    - id: napari-serialem-navigator.LinkMap
+      python_name: napari_serialem_navigator._widget:LinkMap
+      title: Link map
   readers:
     - command: napari-serialem-navigator.get_reader
       accepts_directories: false
-      filename_patterns: ['*.npy']
+      filename_patterns: ['*.nav']
   widgets:
-    - command: napari-serialem-navigator.make_qwidget
-      display_name: Example QWidget
-    - command: napari-serialem-navigator.make_magic_widget
-      display_name: Example Magic Widget
-    - command: napari-serialem-navigator.make_func_widget
-      autogenerate: true
-      display_name: Example Function Widget
+    - command: napari-serialem-navigator.LinkMap
+      display_name: Link map
