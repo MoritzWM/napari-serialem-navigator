@@ -42,9 +42,12 @@ def reader_function(path):
     return [(polygon_coords, dict(name=f'{path.stem} polygons',
                             shape_type='polygon',
                             face_color='transparent',
+                            edge_color='red',
+                            edge_width=0.1,
                             text=dict(
                                 string='{polygon_name}',
                                 anchor='upper_right',
+                                color="red",
                             ),
                             properties=dict(polygon_name=polygon_names)), 'shapes'),
             (point_coords, dict(name=f'{path.stem} points',
