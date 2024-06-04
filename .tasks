@@ -1,0 +1,4 @@
+[run-project]
+command=napari assets/nav.nav
+cwd=$(VIM_ROOT)
+output=terminal
