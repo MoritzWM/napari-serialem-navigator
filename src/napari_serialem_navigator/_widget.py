@@ -5,42 +5,42 @@ from magicgui.widgets import ComboBox, PushButton, Container, create_widget
 from skimage.transform import estimate_transform
 
 if TYPE_CHECKING:
-    from napari.viewer import Viewer
-    from napari.layers import Shapes, Image
+    import napari
 
 
 class LinkMap(Container):
-    def __init__(self, viewer: 'Viewer'):
+    def __init__(self, viewer: "napari.viewer.Viewer"):  # type: ignore
         super().__init__()
         self.viewer = viewer
 
-
         self.wdg_shapes_layer = create_widget(
-            label="Navigator shapes",
-            annotation="Shapes"
+            label="Navigator shapes", annotation="napari.layers.Shapes"
         )
         self.wdg_image_layer = create_widget(
-            label="Map image",
-            annotation="Image"
+            label="Map image", annotation="napari.layers.Image"
         )
-        self.wdg_polygon = ComboBox(label="Polygon", choices=self.polygon_names)
+        self.wdg_polygon = ComboBox(
+            label="Polygon", choices=self.polygon_names
+        )
         self.wdg_link = PushButton(text="Link")
         self.wdg_link.clicked.connect(self.link)
         self.wdg_shapes_layer.changed.connect(self.wdg_polygon.reset_choices)  # type: ignore
-        self.extend([
-            self.wdg_shapes_layer,
-            self.wdg_image_layer,
-            self.wdg_polygon,
-            self.wdg_link,
-        ])
-        
+        self.extend(
+            [
+                self.wdg_shapes_layer,
+                self.wdg_image_layer,
+                self.wdg_polygon,
+                self.wdg_link,
+            ]
+        )
+
     @property
-    def shapes_layer(self) -> Optional["Shapes"]:
+    def shapes_layer(self) -> Optional["napari.layers.Shapes"]:  # type: ignore
         assert isinstance(self.wdg_shapes_layer, ComboBox)
         return self.wdg_shapes_layer.value
 
     @property
-    def image_layer(self) -> Optional["Image"]:
+    def image_layer(self) -> Optional["napari.layers.Image"]:  # type: ignore
         assert isinstance(self.wdg_image_layer, ComboBox)
         return self.wdg_image_layer.value
 
@@ -55,12 +55,15 @@ class LinkMap(Container):
         shape_idx = self.polygon_names().index(self.wdg_polygon.value)
         shape = self.shapes_layer.data[shape_idx]
         image_shape = self.image_layer.data.shape
-        image_coords = np.array([
-            [image_shape[0], 0],
-            [image_shape[0], image_shape[1]],
-            [0, image_shape[1]],
-            [0, 0],
-        ])
-        transform = estimate_transform(ttype='affine', src=image_coords, dst=shape)
+        image_coords = np.array(
+            [
+                [image_shape[0], 0],
+                [image_shape[0], image_shape[1]],
+                [0, image_shape[1]],
+                [0, 0],
+            ]
+        )
+        transform = estimate_transform(
+            ttype="affine", src=image_coords, dst=shape
+        )
         self.image_layer.affine = transform.params
-        
