@@ -1,0 +1,50 @@
+name: napari-serialem-navigator
+display_name: SerialEM Navigator
+# use 'hidden' to remove plugin from napari hub search results
+visibility: public
+# see https://napari.org/stable/plugins/technical_references/manifest.html#fields for valid categories
+# categories: []
+contributions:
+  commands:
+    - id: napari-serialem-navigator.get_reader
+      python_name: napari_serialem_navigator._reader:napari_get_reader
+      title: Open data with SerialEM Navigator
+    - id: napari-serialem-navigator.make_sample_data
+      python_name: napari_serialem_navigator._sample_data:make_sample_data
+      title: Load sample data from SerialEM Navigator
+    - id: napari-serialem-navigator.make_container_widget
+      python_name: napari_serialem_navigator:ImageThreshold
+      title: Make threshold Container widget
+    - id: napari-serialem-navigator.make_magic_widget
+      python_name: napari_serialem_navigator:threshold_magic_widget
+      title: Make threshold magic widget
+    - id: napari-serialem-navigator.make_function_widget
+      python_name: napari_serialem_navigator:threshold_autogenerate_widget
+      title: Make threshold function widget
+    - id: napari-serialem-navigator.make_qwidget
+      python_name: napari_serialem_navigator:ExampleQWidget
+      title: Make example QWidget
+  readers:
+    - command: napari-serialem-navigator.get_reader
+      accepts_directories: false
+      filename_patterns: ['*.npy']
+  sample_data:
+    - command: napari-serialem-navigator.make_sample_data
+      display_name: SerialEM Navigator
+      key: unique_id.1
+  widgets:
+    - command: napari-serialem-navigator.make_container_widget
+      display_name: Container Threshold
+    - command: napari-serialem-navigator.make_magic_widget
+      display_name: Magic Threshold
+    - command: napari-serialem-navigator.make_function_widget
+      autogenerate: true
+      display_name: Autogenerate Threshold
+    - command: napari-serialem-navigator.make_qwidget
+      display_name: Example QWidget
+  menus:
+    napari/layers/segment:
+      - command: napari-serialem-navigator.make_container_widget
+      - command: napari-serialem-navigator.make_magic_widget
+      - command: napari-serialem-navigator.make_function_widget
+      - command: napari-serialem-navigator.make_qwidget
