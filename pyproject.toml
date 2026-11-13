@@ -32,6 +32,8 @@ requires-python = ">=3.10"
 dependencies = [
     "numpy",
     "magicgui",
+    "mrcfile",
+    "pandas",
     "qtpy",
     "scikit-image",
 ]
